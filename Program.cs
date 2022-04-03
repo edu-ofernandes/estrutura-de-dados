@@ -2,66 +2,124 @@
 
 class Exercicios  
 {   
-    static int potencia(int valueX, int valueY)
-    {   
-        if (valueY == 0)
-        {
-            return 1;
-        }
+     const int MAX = 20;
+
+    static void InserePilha(char[] p, ref int t, char v)
+    {
+        p[t] = v;
+        t = t + 1;
+    }
+    static char RemovePilha(char[] p, ref int t)
+    {
+        t = t - 1;
+        return (p[t]);
+    }
+    static bool EstaVaziaPilha(int t)
+    {
+        if (t == 0)
+            return true;
         else
-        {
-            return valueX * potencia(valueX, valueY - 1);
-        }
+            return false;
     }
-
-    static async void cubos(int valueCuboN)
+    static bool EstaCheiaPilha(int t, int maxVal)
     {
-        for (int i = 1; i <= valueCuboN; i++)
-        {
-            Console.Write(i * i * i);
-        }
-    }
-
-    static int mdc(int num1, int num2)
-    {
-        if (num1 == num2)
-        {
-            return num1;
-        }
-        else if (num1 < num2)
-        {
-            return mdc(num2, num1);
-        }
+        if (t == maxVal)
+            return true;
         else
-        {
-            return mdc(num1 - num2, num2);
-        }
+            return false;
     }
 
-    static int fibonacci(int numN)
+    // -----------------------------------------------------------------------------------------------------------
+
+    static void InsereFila(int[] q, ref int f, int v)
     {
-        if (numN == 0 || numN == 1) return numN;
-        else return fibonacci(numN -1) + fibonacci(numN - 2);
+        q[f] = v;
+        f = f + 1;
     }
-    static void binario(int numInt)
+    static int RemoveFila(int[] q, ref int i)
     {
-        int result = numInt / 2;
-        int resto = numInt % 2;
-
-        if (resto == 0)
-        {
-            binario(result);
-        }
-        Console.WriteLine(result % 2);
+        int v = q[i];
+        i = i + 1;
+        return (v);
+    }
+    static bool EstaVaziaFila(int i, int f)
+    {
+        if (i == f)
+            return true;
+        else
+            return false;
+    }
+    static bool EstaCheiaFila(int f, int maxValFila)
+    {
+        if (f == maxValFila)
+            return true;
+        else
+            return false;
     }
 
-    static void Main()
-    {   
+
+
+    static void trabalho1()
+    {
+        int potencia(int valueX, int valueY)
+        {
+            if (valueY == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return valueX * potencia(valueX, valueY - 1);
+            }
+        }
+
+        void cubos(int valueCuboN)
+        {
+            for (int i = 1; i <= valueCuboN; i++)
+            {
+                Console.Write(i * i * i);
+            }
+        }
+
+        int mdc(int num1, int num2)
+        {
+            if (num1 == num2)
+            {
+                return num1;
+            }
+            else if (num1 < num2)
+            {
+                return mdc(num2, num1);
+            }
+            else
+            {
+                return mdc(num1 - num2, num2);
+            }
+        }
+
+        int fibonacci(int numN)
+        {
+            if (numN == 0 || numN == 1) return numN;
+            else return fibonacci(numN - 1) + fibonacci(numN - 2);
+        }
+
+        void binario(int numInt)
+        {
+            int result = numInt / 2;
+            int resto = numInt % 2;
+
+            if (resto == 0)
+            {
+                binario(result);
+            }
+            Console.WriteLine(result % 2);
+        }
+
         int n = 2;
 
-        while(n <= 6)
+        while (n <= 6)
         {
-            Console.WriteLine("Escolha algum exercício: \n(2) Potência \n(3) Cubos \n(4) MDC \n(5) Fibonacci \n(6) Converter para binário" );
+            Console.WriteLine("Escolha algum exercício: \n(2) Potência \n(3) Cubos \n(4) MDC \n(5) Fibonacci \n(6) Converter para binário");
             n = Convert.ToInt32(Console.ReadLine());
 
             switch (n)
@@ -73,7 +131,7 @@ class Exercicios
 
                     x = Convert.ToInt32(Console.ReadLine());
                     y = Convert.ToInt32(Console.ReadLine());
-                    
+
                     Console.WriteLine(potencia(x, y));
 
                     break;
@@ -90,7 +148,7 @@ class Exercicios
                 case 4:
                     Console.WriteLine("Escolha dois números para achar o MDC deles: ");
                     int numx, numy;
-                    
+
                     numx = Convert.ToInt32(Console.ReadLine());
                     numy = Convert.ToInt32(Console.ReadLine());
 
@@ -99,7 +157,7 @@ class Exercicios
                     break;
                 case 5:
                     int numFib;
-                    
+
                     Console.WriteLine("Escolha um número para saber sua sequência Fibonacci: ");
 
                     numFib = Convert.ToInt32(Console.ReadLine());
@@ -109,7 +167,7 @@ class Exercicios
                     break;
                 case 6:
                     int numBi;
-                    
+
                     Console.WriteLine("Escolha um número para saber binário: ");
 
                     numBi = Convert.ToInt32(Console.ReadLine());
@@ -122,5 +180,52 @@ class Exercicios
                     break;
             }
         }
-    }    
+
+    }
+
+    static void trabalho2()
+    {
+        string frase, novaFrase;
+
+        novaFrase = " ";
+
+        int tamanho, topo = 0;
+
+        Console.WriteLine("Insira uma frase para o algoritmo mostrar invertida: ");
+        frase = Console.ReadLine();
+
+        char[] pilhaVal;
+
+        tamanho = frase.Length;
+
+        pilhaVal = new Char[tamanho];
+        
+        int i = 1;
+
+        while (i < frase.Length)
+        {
+            while (frase[i] != ' ' && i < frase.Length)
+            {
+                InserePilha(pilhaVal, ref topo, frase[i]);
+                i = i + 1;
+            }
+
+            while (!EstaVaziaPilha(topo))
+            {   
+                char novaFraseVal = RemovePilha(pilhaVal, ref topo);
+                novaFrase = novaFrase + novaFraseVal;
+            }
+
+            novaFrase += " ";
+            i = i + 1;
+        }
+
+        Console.WriteLine(novaFrase);
+    }
+
+    static void Main()
+    {
+
+        trabalho2();
+    }
 }
