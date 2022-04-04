@@ -1,8 +1,12 @@
 ﻿using System;
 
-class Exercicios  
-{   
-     const int MAX = 20;
+
+namespace exercicio15
+{
+    internal class Program
+    {
+
+        const int MAX = 20;
 
     static void InserePilha(char[] p, ref int t, char v)
     {
@@ -185,14 +189,12 @@ class Exercicios
 
     static void trabalho2()
     {
-        string frase, novaFrase;
-
-        novaFrase = " ";
+        string frase, novaFrase = "";
 
         int tamanho, topo = 0;
 
         Console.WriteLine("Insira uma frase para o algoritmo mostrar invertida: ");
-        frase = Console.ReadLine();
+        frase = Console.ReadLine() + " ";
 
         char[] pilhaVal;
 
@@ -200,11 +202,11 @@ class Exercicios
 
         pilhaVal = new Char[tamanho];
         
-        int i = 1;
+        int i = 0;
 
-        while (i < frase.Length)
+        while (i < frase.Length - 1)
         {
-            while (frase[i] != ' ' && i < frase.Length)
+            while (frase[i] != ' ' && i < frase.Length - 1)
             {
                 InserePilha(pilhaVal, ref topo, frase[i]);
                 i = i + 1;
@@ -221,11 +223,13 @@ class Exercicios
         }
 
         Console.WriteLine(novaFrase);
+        Console.ReadKey();
     }
 
     static void Main()
     {
 
         trabalho2();
+    }
     }
 }
